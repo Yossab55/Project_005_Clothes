@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const ItemSchema = new Schema({
+const ItemsSchema = new Schema({
   timeUsed: {
     type: Number,
     required: true,
@@ -19,6 +19,6 @@ const ItemSchema = new Schema({
   }
 })
 
-const ItemModel = new mongoose.model("item", ItemSchema);
+const ItemsModel = new mongoose.model("item", ItemsSchema);
 
-export {ItemModel};
+export {ItemsModel};
