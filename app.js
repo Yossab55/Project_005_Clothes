@@ -11,10 +11,3 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./public"));
 app.set("view engine", "ejs");
-
-import { ItemsRouter } from "./routers/ItemsRouter.js";
-app.use("/items", ItemsRouter);
-
-// app.get("/", (request, response) => {
-//   response.redirect("/items")
-// })

@@ -1,24 +1,25 @@
 import mongoose, { Schema } from "mongoose";
 
-const ItemsSchema = new Schema({
+const ItemSchema = new Schema({
   timeUsed: {
     type: Number,
     required: true,
+    default: 0,
   },
   itemName: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
     type: String,
     required: true,
-    default: "NoCategory"
+    default: "NoCategory",
   },
   imageSource: {
-    type: String
-  }
-})
+    type: String,
+  },
+});
 
-const ItemsModel = new mongoose.model("item", ItemsSchema);
+const ItemModel = new mongoose.model("item", ItemSchema);
 
-export {ItemsModel};
+export { ItemModel };

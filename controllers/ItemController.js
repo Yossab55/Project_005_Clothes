@@ -1,8 +1,8 @@
-import { ItemsModel } from "../models/ItemsModel.js";
+import { ItemModel } from "../models/ItemModel.js";
 import { Code } from "../source/Code.js";
 async function showAll(request, response) {
   try {
-    const ITEMS = await ItemsModel.find();
+    const ITEMS = await ItemModel.find();
     response.status(Code.GOOD).json(ITEMS);
   } catch (error) {
     console.log("server error: " + error);
