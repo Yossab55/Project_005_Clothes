@@ -1,7 +1,8 @@
 import "dotenv/config.js";
 import express from "express";
 import { connectToDB } from "./source/db.js";
-import { STATUS_CODE } from "./source/code.js";
+import { RESPONSE_CODE_GOOD } from "./source/constant/responseCode.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 const app = express();
 
 connectToDB(app);
@@ -15,5 +16,9 @@ app.set("view engine", "ejs");
 // Router
 
 app.get("/", (req, res) => {
-  res.status(STATUS_CODE.GOOD).json({ hello: "word" });
+  res.status(RESPONSE_CODE_GOOD).json({ hello: "word" });
 });
+
+//Error handel
+
+app.use(errorHandler);
