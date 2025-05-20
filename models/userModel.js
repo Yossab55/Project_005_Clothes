@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import isEmail from "validator/lib/isEmail.js";
+import { AppError } from "../source/AppError.js";
+import { RESPONSE_CODE_BAD } from "../source/constant/responseCode.js";
 
 const userSchema = mongoose.Schema({
   username: {
@@ -31,6 +33,21 @@ userSchema.pre("save", async function hashPassword(next) {
   next();
 });
 
+userSchema.statics.login = async function (userData) {
+  const { email, password } = userData;
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    } else {
+      throw new AppError(11, "wrong password", RESPONSE_CODE_BAD);
+    }
+  } else {
+    //this user doesn't exists
+    throw new AppError(22, "the user doesn't exists", RESPONSE_CODE_BAD);
+  }
+};
 const userModel = mongoose.model("User", userSchema);
 
 export { userModel };

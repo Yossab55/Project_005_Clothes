@@ -4,6 +4,8 @@ import { connectToDB } from "./source/db.js";
 import { RESPONSE_CODE_GOOD } from "./source/constant/responseCode.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { signupRouter } from "./routers/signupRouter.js";
+import { loginRouter } from "./routers/loginRouter.js";
+
 const app = express();
 
 connectToDB(app);
@@ -20,6 +22,7 @@ app.get("/", (req, res) => {
   res.status(RESPONSE_CODE_GOOD).json({ hello: "word" });
 });
 app.use("/signup", signupRouter);
+app.use("/login", loginRouter);
 //Error handel
 
 app.use(errorHandler);
