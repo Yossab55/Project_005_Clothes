@@ -1,4 +1,4 @@
-tryCatch = (controller) =>
+const tryCatch = (controller) =>
   async function (req, res, next) {
     try {
       await controller(req, res);
