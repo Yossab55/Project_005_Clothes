@@ -3,7 +3,7 @@ const tryCatch = (controller) =>
     try {
       await controller(req, res);
     } catch (error) {
-      return next(error);
+      return next(error); // to path error arg
     }
   };
 
