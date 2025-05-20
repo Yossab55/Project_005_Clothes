@@ -1,5 +1,5 @@
 import { ItemModel } from "../models/ItemModel.js";
-import { Code } from "../source/Code.js";
+import { Code } from "../source/code.js";
 async function showAll(request, response) {
   try {
     const ITEMS = await ItemModel.find();
