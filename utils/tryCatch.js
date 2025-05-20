@@ -6,3 +6,5 @@ tryCatch = (controller) =>
       return next(error);
     }
   };
+
+export { tryCatch };
