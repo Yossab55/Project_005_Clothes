@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const ItemSchema = new Schema({
+const itemSchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -27,6 +27,6 @@ const ItemSchema = new Schema({
 });
 
 // todo static method to save file in the folder file
-const ItemModel = new mongoose.model("item", ItemSchema);
+const itemModel = new mongoose.model("Item", itemSchema);
 
-export { ItemModel };
+export { itemModel };
