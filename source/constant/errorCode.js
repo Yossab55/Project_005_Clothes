@@ -1,0 +1,3 @@
+const ERROR_CODE_UNIQUE = 11000;
+
+export { ERROR_CODE_UNIQUE };
