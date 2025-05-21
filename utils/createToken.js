@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
-import { env } from "../source/helpers.js";
-import { MAX_AGE } from "../source/constant/timeConstants.js";
+import { env } from "../utils/helpers.js";
+import { MAX_AGE } from "../utils/constant/timeConstants.js";
 
-async function createToken(id) {
-  const token = await jwt.sign(
+function createToken(id) {
+  const token = jwt.sign(
     {
-      id,
+      id: id,
     },
     env("JWT_SECRET"),
     { expiresIn: MAX_AGE }

@@ -1,8 +1,7 @@
 import { userModel } from "../models/userModel.js";
-import jwt from "jsonwebtoken";
-import { env } from "../source/helpers.js";
-import { RESPONSE_CODE_CREATED_SUCCESSFULLY } from "../source/constant/responseCode.js";
-const MAX_AGE = 30 * 24 * 60 * 60;
+import { RESPONSE_CODE_CREATED_SUCCESSFULLY } from "../utils/constant/responseCode.js";
+import { createToken } from "../utils/createToken.js";
+import { MAX_AGE } from "../utils/constant/timeConstants.js";
 function getSignupView(req, res) {
   res.render("signup.ejs");
 }
@@ -15,14 +14,9 @@ async function createUser(req, res) {
     password,
   };
   const user = await userModel.create(userData);
-  const token = await jwt.sign(
-    {
-      id: user["_id"],
-    },
-    env("JWT_SECRET"),
-    { expiresIn: MAX_AGE }
-  );
+  const token = createToken();
   res.cookie("jwt", token, { httpOnly: true, maxAge: MAX_AGE * 1000 });
+  //todo redirect to home page
   res.status(RESPONSE_CODE_CREATED_SUCCESSFULLY).json({ user });
 }
 

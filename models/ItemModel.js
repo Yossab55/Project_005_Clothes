@@ -21,7 +21,7 @@ const itemSchema = new Schema({
     required: true,
     default: "NoCategory",
   },
-  imageSource: {
+  imageutils: {
     type: String,
   },
 });

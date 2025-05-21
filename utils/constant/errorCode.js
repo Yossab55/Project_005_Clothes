@@ -1,3 +1,15 @@
+//* Error code mongoose unique
 const ERROR_CODE_UNIQUE = 11000;
 
 export { ERROR_CODE_UNIQUE };
+
+//* custom error_code for AppError
+
+const ERROR_CODE_EMAIL_NOT_FOUND = 511001;
+const ERROR_CODE_WRONG_PASSWORD = 522000;
+const ERROR_CODE_FORBIDDEN = 544000;
+export {
+  ERROR_CODE_EMAIL_NOT_FOUND,
+  ERROR_CODE_WRONG_PASSWORD,
+  ERROR_CODE_FORBIDDEN,
+};
