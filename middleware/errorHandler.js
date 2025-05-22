@@ -1,6 +1,7 @@
 import { AppError } from "../utils/AppError.js";
 import {
   ERROR_CODE_EMAIL_NOT_FOUND,
+  ERROR_CODE_FORBIDDEN,
   ERROR_CODE_UNIQUE,
   ERROR_CODE_WRONG_PASSWORD,
 } from "../utils/constant/errorCode.js";
@@ -37,6 +38,10 @@ function errorHandler(error, req, res, next) {
 
     if (CODE == ERROR_CODE_WRONG_PASSWORD) {
       errors["password"] = error.message;
+    }
+
+    if (CODE == ERROR_CODE_FORBIDDEN) {
+      res.status(error.statusCode).json({ page: "direct me to 403 page" });
     }
 
     res.status(error.statusCode).json({ errors });
