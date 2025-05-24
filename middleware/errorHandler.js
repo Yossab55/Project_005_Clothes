@@ -4,6 +4,8 @@ import {
   ERROR_CODE_FORBIDDEN,
   ERROR_CODE_UNIQUE,
   ERROR_CODE_WRONG_PASSWORD,
+  ERROR_CODE_PASSWORD_CONFIRMATION,
+  ERROR_CODE_PASSWORD_EMPTY,
 } from "../utils/constant/errorCode.js";
 import {
   RESPONSE_CODE_BAD,
@@ -20,6 +22,7 @@ function errorHandler(error, req, res, next) {
       },
     });
   }
+
   //# validation error
   if (error.message.includes("User validation failed")) {
     let errors = {};
@@ -35,6 +38,7 @@ function errorHandler(error, req, res, next) {
     });
     res.status(RESPONSE_CODE_BAD).json({ errors });
   }
+
   //#AppErrorHandel
   if (error instanceof AppError) {
     let errors = {};
@@ -51,8 +55,23 @@ function errorHandler(error, req, res, next) {
       res.status(error.statusCode).json({ page: "direct me to 403 page" });
     }
 
+    if (CODE == ERROR_CODE_PASSWORD_CONFIRMATION) {
+      const error = {
+        password: error.message,
+      };
+      res.status(error.statusCode).json({ error });
+    }
+
+    if (CODE == ERROR_CODE_PASSWORD_EMPTY) {
+      const error = {
+        password: error.message,
+      };
+      res.status(error.statusCode).json({ error });
+    }
+
     res.status(error.statusCode).json({ errors });
   }
+
   res.status(RESPONSE_CODE_SERVER_DOWN).json({ error });
 }
 

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { userModel } from "../models/userModel.js";
 import { AppError } from "../utils/AppError.js";
-import bcrypt from "bcrypt";
+
 import {
   RESPONSE_CODE_FORBIDDEN,
   RESPONSE_CODE_GOOD,
@@ -12,6 +12,7 @@ import { DbManager } from "../utils/DB/DbManager.js";
 // import { passwordConfirmation } from "../utils/helpers.js";
 
 async function getUser(req, res, next) {
+  const data = req.body;
   const user = await userModel.findById(req.params.id);
   if (!user) {
     throw new AppError(
@@ -20,6 +21,8 @@ async function getUser(req, res, next) {
       RESPONSE_CODE_FORBIDDEN
     );
   }
+  if (data.passwordConfirmation)
+    res.passwordConfirmation = data.passwordConfirmation;
   res.user = user;
   next();
 }
@@ -36,10 +39,17 @@ async function update(req, res) {
   const updatedUser = await userModel.findById(user.id);
   res.status(RESPONSE_CODE_GOOD).json(updatedUser);
 }
+
+async function remove(req, res) {
+  const user = res.user;
+  await userModel.deleteOne(user.id);
+  res.status(RESPONSE_CODE_GOOD).json({ message: "deleted successfully" });
+}
 const userController = {
   getUser,
   getUserData,
   update,
+  remove,
 };
 
 export { userController };
