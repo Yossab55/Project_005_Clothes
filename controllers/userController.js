@@ -8,6 +8,7 @@ import {
   RESPONSE_CODE_UPDATED_NO_CONTENT,
 } from "../utils/constant/responseCode.js";
 import { ERROR_CODE_FORBIDDEN } from "../utils/constant/errorCode.js";
+import { DbManager } from "../utils/DB/DbManager.js";
 // import { passwordConfirmation } from "../utils/helpers.js";
 
 async function getUser(req, res, next) {
@@ -29,18 +30,11 @@ function getUserData(req, res) {
 }
 
 async function update(req, res) {
-  const { username, email } = req.body;
   const user = res.user;
 
-  if (username) {
-    user.username = username;
-  }
-
-  if (email) {
-    user.email = email;
-  }
-  const updatedUser = await user.save();
-  res.status(RESPONSE_CODE_UPDATED_NO_CONTENT).json({ updatedUser });
+  await DbManager.update(userModel, req.body, user.id);
+  const updatedUser = await userModel.findById(user.id);
+  res.status(RESPONSE_CODE_GOOD).json(updatedUser);
 }
 const userController = {
   getUser,

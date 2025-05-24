@@ -28,6 +28,13 @@ function errorHandler(error, req, res, next) {
     });
     res.status(RESPONSE_CODE_BAD).json({ errors });
   }
+  if (error.message.includes("Validation failed")) {
+    let errors = {};
+    Object.values(error.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+    res.status(RESPONSE_CODE_BAD).json({ errors });
+  }
   //#AppErrorHandel
   if (error instanceof AppError) {
     let errors = {};
