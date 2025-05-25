@@ -9,7 +9,7 @@ function requiredAuth(req, res, next) {
         res.status(400).json({ error: "jwt error" });
         // res.redirect("/login");
       } else {
-        res.userId = decodedToken;
+        res.userId = decodedToken.id;
         next();
       }
     });

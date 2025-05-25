@@ -1,6 +1,8 @@
 import express from "express";
-import { ItemController } from "../controllers/ItemController.js";
-const ItemRouter = express.Router();
+import { ItemController } from "../controllers/itemController.js";
+import { requiredAuth } from "../middleware/AuthMiddlewares.js";
+import { tryCatch } from "../utils/tryCatch.js";
+const itemRouter = express.Router();
 
-ItemRouter.get("/", ItemController.showAll);
-export { ItemRouter };
+itemRouter.get("/", tryCatch(requiredAuth), ItemController.getAll);
+export { itemRouter };
