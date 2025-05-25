@@ -37,11 +37,13 @@ userSchema.pre("save", async function hashPassword(next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
 userSchema.pre("remove", function removeReferences(next) {
   const id = this["_id"];
   itemModel.removeFromParent(id);
   next();
 });
+
 userSchema.statics.login = async function (userData) {
   const { email, password } = userData;
   const user = await this.findOne({ email });
@@ -57,7 +59,6 @@ userSchema.statics.login = async function (userData) {
       );
     }
   } else {
-    //this user doesn't exists
     throw new AppError(
       ERROR_CODE_EMAIL_NOT_FOUND,
       "the user doesn't exists",

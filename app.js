@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 //Error handel
 
 app.use(errorHandler);
