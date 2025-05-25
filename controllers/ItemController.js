@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 import { itemModel } from "../models/itemModel.js";
-import { Code } from "../utils/code.js";
-import { RESPONSE_CODE_GOOD } from "../utils/constant/responseCode.js";
+import {
+  RESPONSE_CODE_GOOD,
+  RESPONSE_CODE_UPDATED_NO_CONTENT,
+} from "../utils/constant/responseCode.js";
+import { getObjectId } from "../utils/getObjectId.js";
 
+//# get items
 async function getAll(req, res) {
   const items = getItemByQuery(req, res);
 
@@ -49,9 +53,25 @@ async function getItemByCategory(req, res) {
   });
   return items;
 }
+
+//# patch increment
+
+async function incrementOrDecrement(req, res) {
+  const value = req.body.incrementOrDecrementValue;
+  const id = getObjectId(res.userId);
+
+  await itemModel.update(
+    { _id: id },
+    {
+      $inc: { timeUsed: value },
+    }
+  );
+  res.status(RESPONSE_CODE_UPDATED_NO_CONTENT);
+}
+//# remove if parent -user- removed
 async function removeFromParent(id) {
   await itemModel.deleteMany({ userId: new mongoose.Types.ObjectId(id) });
 }
-const ItemsController = { getAll, removeFromParent };
+const ItemsController = { getAll, removeFromParent, incrementOrDecrement };
 
 export { ItemsController };
