@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import isEmail from "validator/lib/isEmail.js";
 import { AppError } from "../utils/AppError.js";
+import { itemModel } from "./itemModel.js";
 import { RESPONSE_CODE_BAD } from "../utils/constant/responseCode.js";
 import {
   ERROR_CODE_EMAIL_NOT_FOUND,
@@ -32,11 +33,15 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre("save", async function hashPassword(next) {
   const saltRounds = 10;
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(saltRounds);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
-
+userSchema.pre("remove", function removeReferences(next) {
+  const id = this["_id"];
+  itemModel.removeFromParent(id);
+  next();
+});
 userSchema.statics.login = async function (userData) {
   const { email, password } = userData;
   const user = await this.findOne({ email });
@@ -60,6 +65,7 @@ userSchema.statics.login = async function (userData) {
     );
   }
 };
+
 const userModel = mongoose.model("User", userSchema);
 
 export { userModel };

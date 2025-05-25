@@ -1,9 +1,10 @@
-import { ItemModel } from "../models/ItemModel.js";
+import mongoose from "mongoose";
+import { itemModel } from "../models/itemModel.js";
 import { Code } from "../utils/code.js";
 async function showAll(request, response) {
   try {
-    const ITEMS = await ItemModel.find();
-    response.status(Code.GOOD).json(ITEMS);
+    const ITEMS = await itemModel.find();
+    response.status(Code.GOOD).json({ ITEMS });
   } catch (error) {
     console.log("server error: " + error);
     response
@@ -12,6 +13,9 @@ async function showAll(request, response) {
   }
 }
 
-const ItemsController = { showAll };
+async function removeFromParent(id) {
+  await itemModel.deleteMany({ userId: new mongoose.Types.ObjectId(id) });
+}
+const ItemsController = { showAll, removeFromParent };
 
 export { ItemsController };
