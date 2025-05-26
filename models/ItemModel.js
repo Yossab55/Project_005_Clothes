@@ -14,7 +14,7 @@ const itemSchema = new Schema({
   },
   itemName: {
     type: String,
-    required: true,
+    required: [true, "clothe should have name"],
   },
   category: {
     type: String,
@@ -26,7 +26,6 @@ const itemSchema = new Schema({
   },
 });
 
-// todo static method to save file in the folder file
 const itemModel = new mongoose.model("Item", itemSchema);
 
 export { itemModel };

@@ -54,8 +54,21 @@ async function getItemByCategory(req, res) {
   return items;
 }
 
-//# patch increment
+//#post create item
+async function create(req, res) {
+  //todo get data from req
+  const { timeUsed, itemName, category } = req.body;
+  const itemData = {
+    userId: getObjectId(res.userId),
+    timeUsed,
+    itemName,
+    category,
+    imageSource: req.file.filename,
+  };
+  //todo add user id
+}
 
+//# patch increment
 async function incrementOrDecrement(req, res) {
   const value = req.body.incrementOrDecrementValue;
   const id = getObjectId(res.userId);
