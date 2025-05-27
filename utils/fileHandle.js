@@ -1,5 +1,6 @@
 import multer from "multer";
 import path from "path";
+import { unlink } from "fs";
 const destination = "./images";
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -19,4 +20,13 @@ const upload = multer({ storage: storage });
 function uploadFile(formName) {
   return upload.single(formName);
 }
-export { uploadFile };
+
+async function deleteFile(req) {
+  const { destination, filename } = req.file;
+  console.log(destination, filename);
+  const filePath = path.join(destination, filename);
+  await unlink(filePath, (err) => {
+    if (err) throw new Error("hello world");
+  });
+}
+export { uploadFile, deleteFile };

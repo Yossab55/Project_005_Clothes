@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/users", userRouter);
-app.user("/items", itemRouter);
-//Error handel
+app.use("/items", itemRouter);
 
+//Error handel
 app.use(errorHandler);
