@@ -4,9 +4,12 @@ import cookieParser from "cookie-parser";
 import { connectToDB } from "./utils/db.js";
 import { RESPONSE_CODE_GOOD } from "./utils/constant/responseCode.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { signupRouter } from "./routers/signupRouter.js";
-import { loginRouter } from "./routers/loginRouter.js";
-import { userRouter } from "./routers/userRouter.js";
+import {
+  signupRouter,
+  loginRouter,
+  userRouter,
+  itemRouter,
+} from "./routers/indexRouter.js";
 
 const app = express();
 
@@ -27,6 +30,7 @@ app.get("/", (req, res) => {
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/users", userRouter);
+app.user("/items", itemRouter);
 //Error handel
 
 app.use(errorHandler);
