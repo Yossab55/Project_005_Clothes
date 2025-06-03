@@ -26,7 +26,13 @@ itemRouter.patch(
   tryCatch(requiredAuth),
   tryCatch(itemController.incrementOrDecrement)
 );
-
+itemRouter.patch(
+  "/:id",
+  tryCatch(requiredAuth),
+  tryCatch(itemController.getItem),
+  tryCatch(uploadFile("itemImage")),
+  tryCatch(itemController.updateItem)
+);
 itemRouter.delete(
   "/:id",
   tryCatch(requiredAuth),

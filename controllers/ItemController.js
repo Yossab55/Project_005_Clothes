@@ -3,6 +3,7 @@ import { itemModel } from "../models/itemModel.js";
 import { AppError } from "../utils/AppError.js";
 import { getObjectId } from "../utils/getObjectId.js";
 import { deleteFileBy } from "../utils/fileHandle.js";
+import { DbManager } from "../utils/DB/DbManager.js";
 import {
   RESPONSE_CODE_BAD,
   RESPONSE_CODE_CREATED_SUCCESSFULLY,
@@ -10,7 +11,6 @@ import {
   RESPONSE_CODE_UPDATED_NO_CONTENT,
 } from "../utils/constant/responseCode.js";
 import { ERROR_CODE_ITEM_NOT_FOUND } from "../utils/constant/errorCode.js";
-
 //* helpers
 async function getItem(req, res, next) {
   const itemId = req.params.id;
@@ -109,6 +109,19 @@ async function incrementOrDecrement(req, res) {
   );
   res.status(RESPONSE_CODE_UPDATED_NO_CONTENT);
 }
+//# patch update item
+async function updateItem(req, res) {
+  const item = req.item;
+  const id = item["_id"];
+  const data = req.body;
+  await DbManager.update(itemModel, item, data, id);
+  const updatedItem = itemModel.findById(item["_id"]);
+  const newImageUrl = updatedItem.fullImageUrl;
+  if (newImageUrl != item.fullImageUrl) {
+    deleteFileBy(item.fullImageUrl);
+  }
+  res.status(RESPONSE_CODE_GOOD).json({ updatedItem });
+}
 //# remove item request
 async function remove(req, res) {
   const item = req.item;
@@ -131,6 +144,7 @@ const itemController = {
   showItem,
   create,
   incrementOrDecrement,
+  updateItem,
   remove,
   removeFromParent,
 };
