@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { deleteFileBy } from "../utils/fileHandle.js";
 
 const itemSchema = new Schema({
   userId: {
@@ -26,6 +27,15 @@ const itemSchema = new Schema({
   },
 });
 
+itemSchema.post("deleteMany", function deleteAllImages(docs, next) {
+  for (const doc of docs) {
+    const fullImageUrl = doc.fullImageUrl;
+    if (fullImageUrl) {
+      deleteFileBy(fullImageUrl);
+    }
+  }
+  next();
+});
 //* virtual add to the doc new field without restore it in the db
 itemSchema.virtual("fullImageUrl").get(function getUrl() {
   return this.imageSource ? `images/${this.imageSource}` : null;

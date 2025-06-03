@@ -1,14 +1,11 @@
 import { userModel } from "../models/userModel.js";
 import { AppError } from "../utils/AppError.js";
-
 import {
   RESPONSE_CODE_FORBIDDEN,
   RESPONSE_CODE_GOOD,
-  RESPONSE_CODE_UPDATED_NO_CONTENT,
 } from "../utils/constant/responseCode.js";
 import { ERROR_CODE_FORBIDDEN } from "../utils/constant/errorCode.js";
 import { DbManager } from "../utils/DB/DbManager.js";
-// import { passwordConfirmation } from "../utils/helpers.js";
 
 async function getUser(req, res, next) {
   const data = req.body;
@@ -22,25 +19,25 @@ async function getUser(req, res, next) {
   }
   if (data.passwordConfirmation)
     res.passwordConfirmation = data.passwordConfirmation;
-  res.user = user;
+  req.user = user;
   next();
 }
 
 function getUserData(req, res) {
-  const user = res.user;
+  const user = req.user;
   res.status(RESPONSE_CODE_GOOD).json({ user });
 }
 
 async function update(req, res) {
-  const user = res.user;
+  const user = req.user;
 
-  await DbManager.update(userModel, req.body, user.id);
+  await DbManager.update(userModel, user, req.body, user.id);
   const updatedUser = await userModel.findById(user.id);
-  res.status(RESPONSE_CODE_GOOD).json(updatedUser);
+  res.status(RESPONSE_CODE_GOOD).json({ updatedUser });
 }
 
 async function remove(req, res) {
-  const user = res.user;
+  const user = req.user;
   await userModel.deleteOne(user.id);
   res.status(RESPONSE_CODE_GOOD).json({ message: "deleted successfully" });
 }
