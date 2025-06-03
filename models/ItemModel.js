@@ -26,6 +26,13 @@ const itemSchema = new Schema({
   },
 });
 
+//* virtual add to the doc new field without restore it in the db
+itemSchema.virtual("fullImageUrl").get(function getUrl() {
+  return this.imageSource ? `images/${this.imageSource}` : null;
+});
+//* make sure that virtuals appears in the json or object of the doc
+itemSchema.set("toJSON", { virtuals: true });
+itemSchema.set("toObject", { virtuals: true });
 const itemModel = new mongoose.model("Item", itemSchema);
 
 export { itemModel };

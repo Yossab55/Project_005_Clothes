@@ -1,6 +1,7 @@
 import multer from "multer";
 import path from "path";
 import { unlink } from "fs";
+import { fileURLToPath } from "url";
 const destination = "./images";
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -14,19 +15,26 @@ const storage = multer.diskStorage({
     callback(null, filename);
   },
 });
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const upload = multer({ storage: storage });
 
 function uploadFile(formName) {
   return upload.single(formName);
 }
 
-async function deleteFile(req) {
+async function deleteFileFrom(req) {
   const { destination, filename } = req.file;
-  console.log(destination, filename);
   const filePath = path.join(destination, filename);
   await unlink(filePath, (err) => {
     if (err) throw new Error("hello world");
   });
 }
-export { uploadFile, deleteFile };
+async function deleteFileBy(filename) {
+  const filePath = path.join(__dirname, "..", filename);
+  console.log(filePath);
+  await unlink(filePath, (err) => {
+    if (err) throw err;
+  });
+}
+export { uploadFile, deleteFileFrom, deleteFileBy };

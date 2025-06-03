@@ -1,8 +1,37 @@
 import express from "express";
-import { ItemController } from "../controllers/itemController.js";
+import { itemController } from "../controllers/itemController.js";
 import { requiredAuth } from "../middleware/AuthMiddlewares.js";
 import { tryCatch } from "../utils/tryCatch.js";
+import { uploadFile } from "../utils/fileHandle.js";
 const itemRouter = express.Router();
 
-itemRouter.get("/", tryCatch(requiredAuth), ItemController.getAll);
+itemRouter.get("/", tryCatch(requiredAuth), itemController.getAll);
+
+itemRouter.get(
+  "/:id",
+  tryCatch(requiredAuth),
+  tryCatch(itemController.getItem),
+  itemController.showItem
+);
+
+itemRouter.post(
+  "/",
+  tryCatch(requiredAuth),
+  tryCatch(uploadFile("itemImage")),
+  tryCatch(itemController.create)
+);
+
+itemRouter.patch(
+  "/inc",
+  tryCatch(requiredAuth),
+  tryCatch(itemController.incrementOrDecrement)
+);
+
+itemRouter.delete(
+  "/:id",
+  tryCatch(requiredAuth),
+  tryCatch(itemController.getItem),
+  tryCatch(itemController.remove)
+);
+
 export { itemRouter };

@@ -7,9 +7,9 @@ function requiredAuth(req, res, next) {
     jwt.verify(token, env("JWT_SECRET"), (tokenError, decodedToken) => {
       if (tokenError) {
         res.status(400).json({ error: "jwt error" });
-        // res.redirect("/login");
+        //todo  res.redirect("/login");
       } else {
-        res.userId = decodedToken.id;
+        req.userId = decodedToken.id;
         next();
       }
     });

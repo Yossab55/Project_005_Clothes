@@ -12,7 +12,7 @@ import { DbManager } from "../utils/DB/DbManager.js";
 
 async function getUser(req, res, next) {
   const data = req.body;
-  const user = await userModel.findById(res.userId);
+  const user = await userModel.findById(req.userId);
   if (!user) {
     throw new AppError(
       ERROR_CODE_FORBIDDEN,

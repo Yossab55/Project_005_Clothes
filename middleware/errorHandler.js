@@ -11,8 +11,7 @@ import {
   RESPONSE_CODE_BAD,
   RESPONSE_CODE_SERVER_DOWN,
 } from "../utils/constant/responseCode.js";
-import { deleteFile } from "../utils/fileHandle.js";
-import { tryCatch } from "../utils/tryCatch.js";
+import { deleteFileFrom } from "../utils/fileHandle.js";
 
 async function errorHandler(error, req, res, next) {
   // console.log(error);
@@ -43,8 +42,8 @@ async function errorHandler(error, req, res, next) {
     res.status(RESPONSE_CODE_BAD).json({ errors });
   }
 
-  if (error._message.includes("Item validation failed")) {
-    deleteFile(req);
+  if (error.message.includes("Item validation failed")) {
+    deleteFileFrom(req);
     let errors = {};
     Object.values(error.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
