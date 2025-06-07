@@ -1,8 +1,11 @@
 import multer from "multer";
 import path from "path";
-import { unlink } from "fs";
+import fs from "fs";
 import { fileURLToPath } from "url";
+import { promisify } from "util";
 const destination = "./images";
+const unlink = promisify(fs.unlink);
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, destination);
@@ -26,15 +29,29 @@ function uploadFile(formName) {
 async function deleteFileFrom(req) {
   const { destination, filename } = req.file;
   const filePath = path.join(destination, filename);
-  await unlink(filePath, (err) => {
-    if (err) throw new Error("hello world");
-  });
+  await unlink(filePath);
+  //todo test with tryCatch block
+  //todo it's cool man try it
 }
+// async function deleteFileFrom(req) {
+//   const { destination, filename } = req.file;
+//   const filePath = path.join(destination, filename);
+//   await unlink(filePath, (err) => {
+//     if (err) {
+//       // you need to handel this error?
+//     }
+//   });
+// }
 async function deleteFileBy(filename) {
   const filePath = path.join(__dirname, "..", filename);
   console.log(filePath);
-  await unlink(filePath, (err) => {
-    if (err) throw err;
-  });
+  await unlink(filePath);
 }
+// async function deleteFileBy(filename) {
+//   const filePath = path.join(__dirname, "..", filename);
+//   console.log(filePath);
+//   await unlink(filePath, (err) => {
+//     if (err) throw err;
+//   });
+// }
 export { uploadFile, deleteFileFrom, deleteFileBy };

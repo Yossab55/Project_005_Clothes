@@ -17,10 +17,9 @@ const itemSchema = new Schema({
     type: String,
     required: [true, "clothe should have name"],
   },
-  category: {
-    type: String,
-    required: true,
-    default: "NoCategory",
+  favorite: {
+    type: Boolean,
+    default: false,
   },
   imageSource: {
     type: String,

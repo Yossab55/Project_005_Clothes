@@ -23,8 +23,8 @@ userRouter.patch(
 userRouter.delete(
   "/",
   requiredAuth,
-  tryCatch(userController.getUser),
   tryCatch(passwordConfirmation),
+  tryCatch(userController.getUser),
   tryCatch(userController.update)
 );
 export { userRouter };
