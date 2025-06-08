@@ -29,8 +29,9 @@ const itemSchema = new Schema({
 itemSchema.post("deleteMany", function deleteAllImages(docs, next) {
   for (const doc of docs) {
     const fullImageUrl = doc.fullImageUrl;
+    console.log(fullImageUrl);
     if (fullImageUrl) {
-      deleteFileBy(fullImageUrl);
+      tryCatch(deleteFileBy(fullImageUrl));
     }
   }
   next();
@@ -40,8 +41,20 @@ itemSchema.virtual("fullImageUrl").get(function getUrl() {
   return this.imageSource ? `images/${this.imageSource}` : null;
 });
 //* make sure that virtuals appears in the json or object of the doc
-itemSchema.set("toJSON", { virtuals: true });
-itemSchema.set("toObject", { virtuals: true });
+itemSchema.set("toJSON", {
+  virtuals: true,
+  transform: (doc, ret) => {
+    delete ret.id;
+    return ret;
+  },
+});
+itemSchema.set("toObject", {
+  virtuals: true,
+  transform: (doc, ret) => {
+    delete ret.id;
+    return ret;
+  },
+});
 const itemModel = new mongoose.model("Item", itemSchema);
 
 export { itemModel };

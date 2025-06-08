@@ -15,16 +15,16 @@ userRouter.get(
 userRouter.patch(
   "/",
   requiredAuth,
-  tryCatch(passwordConfirmation),
   tryCatch(userController.getUser),
+  tryCatch(passwordConfirmation),
   tryCatch(userController.update)
 );
 
 userRouter.delete(
   "/",
   requiredAuth,
-  tryCatch(passwordConfirmation),
   tryCatch(userController.getUser),
-  tryCatch(userController.update)
+  tryCatch(passwordConfirmation),
+  tryCatch(userController.remove)
 );
 export { userRouter };

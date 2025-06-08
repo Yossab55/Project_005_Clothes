@@ -7,9 +7,9 @@ import {
 import { RESPONSE_CODE_BAD } from "../utils/constant/responseCode.js";
 
 async function passwordConfirmation(req, res, next) {
-  const password = req.body.passwordConfirmation;
+  const password = req.passwordConfirmation;
   if (password) {
-    const check = bcrypt.compare(password, res.user.password);
+    const check = bcrypt.compare(password, req.user.password);
     if (check) {
       next();
     } else {

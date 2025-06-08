@@ -1,0 +1,603 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "project_005_clotheCount",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login Router",
+        "deprecated": false,
+        "description": "# Login \n\ncheck the user is in db or not and it's password right or not \n\ncreate jwt toekn after that and redirect to the home page",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pasword": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "pasword",
+                  "email"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_d": {
+                      "type": "string",
+                      "description": "_id mongose id"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "passwrod": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "_d",
+                    "username",
+                    "passwrod",
+                    "email"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/signup": {
+      "post": {
+        "summary": "Sign up",
+        "deprecated": false,
+        "description": "# create new user\n\nvalidation on the user email and password \n\nif all are right then create user and redirect him to home page \n\nalso create jwt token for him",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ]
+              },
+              "example": {
+                "username": "Patrick Lubowitz",
+                "email": "Coty.Harber@gmail.com",
+                "password": "33LDcmnsMRDtpL0"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "if every thing okay with the data and validation it will send the user object and jwt cookie for it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "ID Object Id from Mongoose"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "\n"
+                    }
+                  },
+                  "required": [
+                    "_id",
+                    "email",
+                    "password",
+                    "username"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Example 1",
+                    "value": {
+                      "_id": "dolore quis minim",
+                      "email": "Guadalupe.Stamm79@yahoo.com",
+                      "password": "ChI8wwPR1T0E60y",
+                      "username": "Julie Turner"
+                    }
+                  },
+                  "2": {
+                    "summary": "Example 1",
+                    "value": {
+                      "errors": {
+                        "password": "J6HyReAPqZ5FIjb",
+                        "email": "Marcelino_Padberg@gmail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "So if there is something worng with the data sent to the server mongoose will make the validation if there is error it will throught it and send errors message object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "password": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "user profile data ",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0ODUyMjAyNiwiZXhwIjoxNzUxMTE0MDI2fQ.YGgOyQVy3eHIqe48J9ksll9GHbzVsOc7SqRdbgQFI_Q",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/682d5e032517019811feaba5": {
+      "patch": {
+        "summary": "Update user",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/": {
+      "delete": {
+        "summary": "Untitled Endpoint",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0ODUyMjAyNiwiZXhwIjoxNzUxMTE0MDI2fQ.YGgOyQVy3eHIqe48J9ksll9GHbzVsOc7SqRdbgQFI_Q",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/items": {
+      "get": {
+        "summary": "get All Items",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0ODUyMjAyNiwiZXhwIjoxNzUxMTE0MDI2fQ.YGgOyQVy3eHIqe48J9ksll9GHbzVsOc7SqRdbgQFI_Q\t",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "favorite": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "userId": {
+                        "type": "string"
+                      },
+                      "timeUsed": {
+                        "type": "integer"
+                      },
+                      "itemName": {
+                        "type": "string"
+                      },
+                      "v": {
+                        "type": "integer"
+                      },
+                      "fullImageUrl": {
+                        "type": "string"
+                      },
+                      "imageSource": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "imageSource"
+                    ]
+                  }
+                },
+                "example": {
+                  "favorite": false,
+                  "_id": "683d4c215cc26ffc8e271de6",
+                  "userId": "68354e054b4d9034b6af24b5",
+                  "timeUsed": 0,
+                  "itemName": "pic of jesus number2",
+                  "category": "NoCategory",
+                  "imageSource": "3530381261748847649595.jpg",
+                  "__v": 0,
+                  "fullImageUrl": "images/3530381261748847649595.jpg"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Create new Item",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDU1ODM0OWI5ZTgxMmIwNTUxOGE3MiIsImlhdCI6MTc0OTM3NTA4NCwiZXhwIjoxNzUxOTY3MDg0fQ.3H-SJeND960WYXMh_Hk9NCc-JTnGsYCYMZp6QPRWvg4\t",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemImage": {
+                    "format": "binary",
+                    "type": "string",
+                    "example": "file://C:\\Users\\yossa\\Downloads\\EU0nOBMX0AAh_ep.jpg"
+                  },
+                  "itemName": {
+                    "example": "pic of jesus",
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/items/6838556bf29dd1f8dcef31b2": {
+      "get": {
+        "summary": "get one Item",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0ODUyMjAyNiwiZXhwIjoxNzUxMTE0MDI2fQ.YGgOyQVy3eHIqe48J9ksll9GHbzVsOc7SqRdbgQFI_Q",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/items/": {
+      "delete": {
+        "summary": "delete item ",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0ODUyMjAyNiwiZXhwIjoxNzUxMTE0MDI2fQ.YGgOyQVy3eHIqe48J9ksll9GHbzVsOc7SqRdbgQFI_Q",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "example": "{{$database.mongodbObjectId}}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "After deleting the item it should redirect to the Get All Items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "email",
+          "password",
+          "id"
+        ]
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "object",
+            "properties": {
+              "required": {
+                "type": "boolean"
+              },
+              "ref": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "required",
+              "ref"
+            ]
+          },
+          "timeUsed": {
+            "type": "integer"
+          },
+          "itemName": {
+            "type": "string"
+          },
+          "favourite": {
+            "type": "boolean",
+            "description": "group"
+          },
+          "imageSource": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "timeUsed",
+          "itemName",
+          "favourite",
+          "imageSource"
+        ]
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

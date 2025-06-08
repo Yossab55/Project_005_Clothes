@@ -6,7 +6,7 @@ import {
 } from "../utils/constant/responseCode.js";
 import { ERROR_CODE_FORBIDDEN } from "../utils/constant/errorCode.js";
 import { DbManager } from "../utils/DB/DbManager.js";
-
+import { removeFromParent } from "./itemController.js";
 async function getUser(req, res, next) {
   const data = req.body;
   const user = await userModel.findById(req.userId);
@@ -17,8 +17,9 @@ async function getUser(req, res, next) {
       RESPONSE_CODE_FORBIDDEN
     );
   }
-  if (data.passwordConfirmation)
-    res.passwordConfirmation = data.passwordConfirmation;
+  if (data.passwordConfirmation) {
+    req.passwordConfirmation = data.passwordConfirmation;
+  }
   req.user = user;
   next();
 }
@@ -39,6 +40,7 @@ async function update(req, res) {
 async function remove(req, res) {
   const user = req.user;
   await userModel.deleteOne(user.id);
+  removeFromParent(user.id);
   res.status(RESPONSE_CODE_GOOD).json({ message: "deleted successfully" });
 }
 const userController = {

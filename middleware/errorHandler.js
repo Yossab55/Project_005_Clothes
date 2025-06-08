@@ -43,7 +43,7 @@ async function errorHandler(error, req, res, next) {
   }
 
   if (error.message.includes("Item validation failed")) {
-    deleteFileFrom(req);
+    tryCatch(deleteFileFrom(req));
     let errors = {};
     Object.values(error.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;

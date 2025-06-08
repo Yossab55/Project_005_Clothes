@@ -4,6 +4,7 @@ import { AppError } from "../utils/AppError.js";
 import { getObjectId } from "../utils/getObjectId.js";
 import { deleteFileBy } from "../utils/fileHandle.js";
 import { DbManager } from "../utils/DB/DbManager.js";
+import { tryCatch } from "../utils/tryCatch.js";
 import {
   RESPONSE_CODE_BAD,
   RESPONSE_CODE_CREATED_SUCCESSFULLY,
@@ -40,8 +41,9 @@ async function getItemByQuery(req, res) {
     return getItemByCategory(req, res);
   }
 
-  const item = await itemModel.find({ userId: getObjectId(req.userId) });
-  return item;
+  const items = await itemModel.find({ userId: getObjectId(req.userId) });
+  console.log(items);
+  return items;
 }
 
 function checkQueryParamPageLimit(req) {
@@ -118,7 +120,7 @@ async function updateItem(req, res) {
   const updatedItem = itemModel.findById(item["_id"]);
   const newImageUrl = updatedItem.fullImageUrl;
   if (newImageUrl != item.fullImageUrl) {
-    deleteFileBy(item.fullImageUrl);
+    tryCatch(deleteFileBy(item.fullImageUrl));
   }
   res.status(RESPONSE_CODE_GOOD).json({ updatedItem });
 }
@@ -128,7 +130,7 @@ async function remove(req, res) {
   const fullImageUrl = item.fullImageUrl;
   console.log("hello world");
   if (fullImageUrl) {
-    deleteFileBy(fullImageUrl);
+    tryCatch(deleteFileBy(fullImageUrl));
   }
   const result = await itemModel.deleteOne({ _id: item._id });
   //todo redirect to /items
@@ -136,7 +138,7 @@ async function remove(req, res) {
 }
 //# remove if parent -user- removed
 async function removeFromParent(id) {
-  await itemModel.deleteMany({ userId: new mongoose.Types.ObjectId(id) });
+  await itemModel.deleteMany({ userId: getObjectId(id) });
 }
 const itemController = {
   getAll,
@@ -146,7 +148,7 @@ const itemController = {
   incrementOrDecrement,
   updateItem,
   remove,
-  removeFromParent,
 };
 
 export { itemController };
+export { removeFromParent };
