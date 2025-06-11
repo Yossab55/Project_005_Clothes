@@ -1,11 +1,11 @@
 import { AppError } from "../utils/errors/AppError.js";
 import {
-  ERROR_CODE_EMAIL_NOT_FOUND,
-  ERROR_CODE_FORBIDDEN,
+  //   ERROR_CODE_EMAIL_NOT_FOUND,
+  //   ERROR_CODE_FORBIDDEN,
   ERROR_CODE_UNIQUE,
-  ERROR_CODE_WRONG_PASSWORD,
-  ERROR_CODE_PASSWORD_CONFIRMATION,
-  ERROR_CODE_PASSWORD_EMPTY,
+  //   ERROR_CODE_WRONG_PASSWORD,
+  //   ERROR_CODE_PASSWORD_CONFIRMATION,
+  //   ERROR_CODE_PASSWORD_EMPTY,
 } from "../utils/constant/errorCode.js";
 import {
   RESPONSE_CODE_BAD,
@@ -52,30 +52,7 @@ async function errorHandler(error, req, res, next) {
   }
   //#AppErrorHandel
   if (error instanceof AppError) {
-    let errorObjectMessage = {};
-    const CODE = error.errorCode;
-    if (CODE == ERROR_CODE_EMAIL_NOT_FOUND) {
-      errorObjectMessage["email"] = error.message;
-    }
-
-    if (CODE == ERROR_CODE_WRONG_PASSWORD) {
-      errorObjectMessage["password"] = error.message;
-    }
-
-    if (CODE == ERROR_CODE_FORBIDDEN) {
-      res.status(error.statusCode).json({ page: "direct me to 403 page" });
-    }
-
-    if (CODE == ERROR_CODE_PASSWORD_CONFIRMATION) {
-      errorObjectMessage["passwordConfirmation"] = error.message;
-    }
-
-    if (CODE == ERROR_CODE_PASSWORD_EMPTY) {
-      errorObjectMessage["password"] = error.message;
-      res.status(error.statusCode).json({ error });
-    }
-
-    res.status(error.statusCode).json({ errorObjectMessage });
+    error.validation(res);
   }
 
   // res.status(RESPONSE_CODE_SERVER_DOWN).json({ error });

@@ -34,7 +34,7 @@ function getUserData(req, res) {
 async function update(req, res) {
   const user = req.user;
 
-  const result = await DbManager.update(userModel, user, req.body, user.id);
+  await DbManager.update(userModel, user, req.body, user.id);
   const updatedUser = await userModel.findById(user.id);
   console.log(updatedUser);
   res.status(RESPONSE_CODE_GOOD).json({ updatedUser });
