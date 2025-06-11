@@ -50,15 +50,18 @@ npm start
 ## API Endpoints
 
 ### Authentication
+
 - `POST /signup` - User registration
 - `POST /login` - User login
 
 ### Users
+
 - `GET /users` - Get user profile
 - `PATCH /users` - Update user profile
 - `DELETE /users` - Delete user account
 
 ### Items
+
 - `GET /items` - Get all items (with pagination/filtering)
 - `POST /items` - Create new item
 - `GET /items/:id` - Get specific item
@@ -67,7 +70,8 @@ npm start
 
 ## Project Structure
 
-```
+```bash
+
 ├── controllers/          # Request handlers
 ├── models/              # Database schemas
 ├── routers/             # Route definitions
@@ -89,12 +93,15 @@ npm start
 This project is licensed under the MIT License.
 
 ## Contact me
+
 - [Email](yossabsamouelwork@gmial.com)
 - [linkedin profile](https://www.linkedin.com/in/yossab-samouel-b71353323/)
 - [My Resume](https://drive.google.com/drive/folders/1yXkeQxSeFWjaB8p-Hh-uHLh5oWKvAlb_?usp=drive_link)
 
-## For more Explaination
+## For more Explanation
+
 Wiki pages you might want to explore:
+
 - [Overview (Yossab55/Project_005_Clothes)](/wiki/Yossab55/Project_005_Clothes#1)
 - [Express Application Entry Point (Yossab55/Project_005_Clothes)](/wiki/Yossab55/Project_005_Clothes#2.1)
 - [Utility Systems (Yossab55/Project_005_Clothes)](/wiki/Yossab55/Project_005_Clothes#5)
