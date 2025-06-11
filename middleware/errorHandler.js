@@ -14,7 +14,8 @@ import {
 import { deleteFileFrom } from "../utils/fileHandle.js";
 
 async function errorHandler(error, req, res, next) {
-  // console.log(error);
+  console.log(error);
+  console.log(typeof error);
   //# code Error handel
   if (error.code == ERROR_CODE_UNIQUE) {
     res.status(RESPONSE_CODE_BAD).json({
@@ -67,10 +68,7 @@ async function errorHandler(error, req, res, next) {
     }
 
     if (CODE == ERROR_CODE_PASSWORD_CONFIRMATION) {
-      const error = {
-        password: error.message,
-      };
-      res.status(error.statusCode).json({ error });
+      errors["passwordConfirmation"] = error.message;
     }
 
     if (CODE == ERROR_CODE_PASSWORD_EMPTY) {

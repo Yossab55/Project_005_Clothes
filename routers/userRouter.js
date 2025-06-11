@@ -6,15 +6,15 @@ import { passwordConfirmation } from "../middleware/passwordConfirmation.js";
 const userRouter = express.Router();
 
 userRouter.get(
-  "/",
-  requiredAuth,
+  "",
+  tryCatch(requiredAuth),
   tryCatch(userController.getUser),
   userController.getUserData
 );
 
 userRouter.patch(
-  "/",
-  requiredAuth,
+  "",
+  tryCatch(requiredAuth),
   tryCatch(userController.getUser),
   tryCatch(passwordConfirmation),
   tryCatch(userController.update)
@@ -22,7 +22,7 @@ userRouter.patch(
 
 userRouter.delete(
   "/",
-  requiredAuth,
+  tryCatch(requiredAuth),
   tryCatch(userController.getUser),
   tryCatch(passwordConfirmation),
   tryCatch(userController.remove)
