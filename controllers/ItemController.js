@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { itemModel } from "../models/itemModel.js";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/errors/AppError.js";
 import { getObjectId } from "../utils/getObjectId.js";
 import { deleteFileBy } from "../utils/fileHandle.js";
 import { DbManager } from "../utils/DB/DbManager.js";

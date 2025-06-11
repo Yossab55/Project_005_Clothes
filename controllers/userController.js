@@ -1,5 +1,5 @@
 import { userModel } from "../models/userModel.js";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/errors/AppError.js";
 import {
   RESPONSE_CODE_FORBIDDEN,
   RESPONSE_CODE_GOOD,

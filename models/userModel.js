@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import isEmail from "validator/lib/isEmail.js";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/errors/AppError.js";
 import { itemModel } from "./itemModel.js";
 import { RESPONSE_CODE_BAD } from "../utils/constant/responseCode.js";
 import {

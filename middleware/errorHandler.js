@@ -1,4 +1,4 @@
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/errors/AppError.js";
 import {
   ERROR_CODE_EMAIL_NOT_FOUND,
   ERROR_CODE_FORBIDDEN,
@@ -15,7 +15,6 @@ import { deleteFileFrom } from "../utils/fileHandle.js";
 
 async function errorHandler(error, req, res, next) {
   console.log(error);
-  console.log(typeof error);
   //# code Error handel
   if (error.code == ERROR_CODE_UNIQUE) {
     res.status(RESPONSE_CODE_BAD).json({
@@ -53,14 +52,14 @@ async function errorHandler(error, req, res, next) {
   }
   //#AppErrorHandel
   if (error instanceof AppError) {
-    let errors = {};
+    let errorObjectMessage = {};
     const CODE = error.errorCode;
     if (CODE == ERROR_CODE_EMAIL_NOT_FOUND) {
-      errors["email"] = error.message;
+      errorObjectMessage["email"] = error.message;
     }
 
     if (CODE == ERROR_CODE_WRONG_PASSWORD) {
-      errors["password"] = error.message;
+      errorObjectMessage["password"] = error.message;
     }
 
     if (CODE == ERROR_CODE_FORBIDDEN) {
@@ -68,17 +67,15 @@ async function errorHandler(error, req, res, next) {
     }
 
     if (CODE == ERROR_CODE_PASSWORD_CONFIRMATION) {
-      errors["passwordConfirmation"] = error.message;
+      errorObjectMessage["passwordConfirmation"] = error.message;
     }
 
     if (CODE == ERROR_CODE_PASSWORD_EMPTY) {
-      const error = {
-        password: error.message,
-      };
+      errorObjectMessage["password"] = error.message;
       res.status(error.statusCode).json({ error });
     }
 
-    res.status(error.statusCode).json({ errors });
+    res.status(error.statusCode).json({ errorObjectMessage });
   }
 
   // res.status(RESPONSE_CODE_SERVER_DOWN).json({ error });

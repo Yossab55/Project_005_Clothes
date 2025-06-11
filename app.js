@@ -1,7 +1,8 @@
 import "dotenv/config.js";
 import express from "express";
 import cookieParser from "cookie-parser";
-import { connectToDB } from "./utils/db.js";
+import morgan from "morgan";
+import { connectToDB } from "./utils/DB/db.js";
 import { RESPONSE_CODE_GOOD } from "./utils/constant/responseCode.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import {
@@ -19,6 +20,7 @@ connectToDB(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(morgan("dev"));
 app.use(express.static("./public"));
 app.set("view engine", "ejs");
 

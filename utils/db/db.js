@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { env } from "../utils/helpers.js";
+import { env } from "../../utils/helpers.js";
 
 async function connectToDB(app) {
   try {

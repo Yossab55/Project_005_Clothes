@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/errors/AppError.js";
 import {
   ERROR_CODE_PASSWORD_CONFIRMATION,
   ERROR_CODE_PASSWORD_EMPTY,
