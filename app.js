@@ -11,7 +11,6 @@ import {
   userRouter,
   itemRouter,
 } from "./routers/indexRouter.js";
-import { mapErrorCode } from "./utils/errors/AppErrorMap.js";
 const app = express();
 
 connectToDB(app);
