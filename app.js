@@ -10,6 +10,7 @@ import {
   loginRouter,
   userRouter,
   itemRouter,
+  imageRouter,
 } from "./routers/indexRouter.js";
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/user", userRouter);
 app.use("/items", itemRouter);
+app.use("/image", imageRouter);
 
 // Error handel
 app.use(errorHandler);

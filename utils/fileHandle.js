@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { promisify } from "util";
 const destination = "./images";
 const unlink = promisify(fs.unlink);
-
+const readFile = promisify(fs.readFile);
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, destination);
@@ -38,4 +38,8 @@ async function deleteFileBy(filename) {
   await unlink(filePath);
 }
 
-export { uploadFile, deleteFileFrom, deleteFileBy };
+async function read(filename) {
+  const result = await readFile(filename);
+  return result;
+}
+export { uploadFile, deleteFileFrom, deleteFileBy, read };
