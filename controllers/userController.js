@@ -44,6 +44,7 @@ async function remove(req, res) {
   const user = req.user;
   await userModel.deleteOne(user.id);
   removeFromParent(user.id);
+  //todo redirect to home page
   res.status(RESPONSE_CODE_GOOD).json({ message: "deleted successfully" });
 }
 const userController = {

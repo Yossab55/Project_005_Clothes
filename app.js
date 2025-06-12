@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 app.use("/items", itemRouter);
 
 // Error handel

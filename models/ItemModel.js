@@ -37,9 +37,11 @@ itemSchema.post("deleteMany", function deleteAllImages(docs, next) {
   next();
 });
 //* virtual add to the doc new field without restore it in the db
-itemSchema.virtual("fullImageUrl").get(function getUrl() {
-  return this.imageSource ? `images/${this.imageSource}` : null;
-});
+//! I felt like it do nothing actually so i remove it but let it here to just
+//know about mongoose virtual
+// itemSchema.virtual("fullImageUrl").get(function getUrl() {
+//   return this.imageSource ? `images/${this.imageSource}` : null;
+// });
 //* make sure that virtuals appears in the json or object of the doc
 itemSchema.set("toJSON", {
   virtuals: true,
