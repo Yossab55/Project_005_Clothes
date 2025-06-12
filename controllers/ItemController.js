@@ -101,7 +101,7 @@ async function create(req, res) {
 //# patch increment
 async function incrementOrDecrement(req, res) {
   const value = req.body.incrementOrDecrementValue;
-  const id = getObjectId(req.userId);
+  const id = getObjectId(req.item["_id"]);
 
   await itemModel.update(
     { _id: id },

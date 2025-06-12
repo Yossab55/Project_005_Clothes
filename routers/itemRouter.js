@@ -22,10 +22,12 @@ itemRouter.post(
 );
 
 itemRouter.patch(
-  "/inc",
+  "/:id/inc",
   tryCatch(requiredAuth),
+  tryCath(itemController.getItem),
   tryCatch(itemController.incrementOrDecrement)
 );
+
 itemRouter.patch(
   "/:id",
   tryCatch(requiredAuth),
