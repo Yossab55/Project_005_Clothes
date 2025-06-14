@@ -4,7 +4,7 @@ import {
   RESPONSE_CODE_BAD,
   RESPONSE_CODE_SERVER_DOWN,
 } from "../constant/responseCode.js";
-import { validationError } from "./validationError.js";
+import { ValidationError } from "./validationError.js";
 class ErrorHandleAbstraction {
   constructor(error, req, res, next) {
     this.error = error;
@@ -34,7 +34,9 @@ class ErrorHandleAbstraction {
       this.error.message.includes("Validation") ||
       this.error.message.includes("validation")
     ) {
-      validationError.call(this.error, this.req, this.res);
+      const validator = new ValidationError(this.error, this.req, this.res);
+      validator.validationError();
+      // validationError.call(this.error, this.req, this.res);
       return true;
     }
     return false;

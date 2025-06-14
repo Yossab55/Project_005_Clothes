@@ -24,7 +24,7 @@ itemRouter.post(
 itemRouter.patch(
   "/:id/inc",
   tryCatch(requiredAuth),
-  tryCath(itemController.getItem),
+  tryCatch(itemController.getItem),
   tryCatch(itemController.incrementOrDecrement)
 );
 

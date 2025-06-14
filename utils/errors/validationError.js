@@ -1,21 +1,27 @@
 import { RESPONSE_CODE_BAD } from "../constant/responseCode.js";
 import { deleteFileFrom } from "../fileHandle.js";
-
-function validationError(req, res) {
-  if (checkItIsItemError.call(this)) {
-    deleteFileFrom(req);
+class ValidationError {
+  constructor(error, req, res) {
+    this.error = error;
+    this.req = req;
+    this.res = res;
   }
-  let errors = {};
-  Object.values(this.errors).forEach(({ properties }) => {
-    errors[properties.path] = properties.message;
-  });
-  res.status(RESPONSE_CODE_BAD).json({ errors });
-}
-function checkItIsItemError() {
-  if (this.message.includes("Item")) {
-    return true;
+  validationError() {
+    if (this.#checkItIsItemError()) {
+      deleteFileFrom(req);
+    }
+    let errors = {};
+    Object.values(this.error.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+    this.res.status(RESPONSE_CODE_BAD).json({ errors });
   }
-  return false;
+  #checkItIsItemError() {
+    if (this.error.message.includes("Item")) {
+      return true;
+    }
+    return false;
+  }
 }
 
-export { validationError };
+export { ValidationError };
