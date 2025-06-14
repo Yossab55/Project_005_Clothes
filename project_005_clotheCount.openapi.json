@@ -200,7 +200,7 @@
       "get": {
         "summary": "user profile data ",
         "deprecated": false,
-        "description": "",
+        "description": "so to get user Profile you just need to have the cookie with jwt not to use another router with id param \n\nif there's no jwt auth or it's wrong it will redirect to login pag",
         "tags": [],
         "parameters": [
           {
@@ -221,6 +221,49 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "_v": {
+                      "type": "integer",
+                      "description": "monog _v"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "email",
+                    "password",
+                    "_v"
+                  ]
+                },
+                "example": {
+                  "id": "HAkyPbw0iLYCAJie9W-Xc",
+                  "username": "Mrs. Iris Zieme",
+                  "email": "Mandy.Rodriguez47@hotmail.com",
+                  "password": "QTFyzh7FyABUoph",
+                  "_v": 0
+                }
+              }
+            },
+            "headers": {}
+          },
+          "301": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
                   "properties": {}
                 }
               }
@@ -229,15 +272,54 @@
           }
         },
         "security": []
-      }
-    },
-    "/user/682d5e032517019811feaba5": {
+      },
       "patch": {
         "summary": "Update user",
         "deprecated": false,
-        "description": "",
+        "description": "update user data [email, password, username]\n\nruns the same validation as like as post a new user after sign up \n\n!! importatnt: for updateing you need password confrimation in request body \nand jwt to idintify the user",
         "tags": [],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzU0ZTA1NGI0ZDkwMzRiNmFmMjRiNSIsImlhdCI6MTc0OTQ1MDgyNiwiZXhwIjoxNzUyMDQyODI2fQ.aRdFaDv2vBXI2bb6SZ1Jl4LpZEiomMfqAZ-2KyYQ6Kg",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "passwordconfirmation": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "passwordconfirmation",
+                  "password"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -245,7 +327,96 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {}
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "monog id"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "the new password if updated\n"
+                    },
+                    "_v": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "_id",
+                    "password",
+                    "email",
+                    "username",
+                    "_v"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ]
+                    },
+                    "passwordConfimration": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "errors",
+                    "passwordConfimration"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-400:Bad Values": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "password": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "password"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
                 }
               }
             },
@@ -257,9 +428,9 @@
     },
     "/user/": {
       "delete": {
-        "summary": "Untitled Endpoint",
+        "summary": "Delete User",
         "deprecated": false,
-        "description": "",
+        "description": "like get request you just need to send the jwt of the user \nbut you need to provide the body request user password he need to provide his password to make sure it's the actual user or not",
         "tags": [],
         "parameters": [
           {
@@ -273,14 +444,81 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "passwordConfirmation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "passwordConfirmation"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
         "responses": {
-          "200": {
+          "301": {
+            "description": "If I delete the user I need to change the url to \"/\" because he can't annymore use his account his account has been deleted for ever\nbe careful with this",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
+                  "title": "",
                   "type": "object",
-                  "properties": {}
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "error message"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
                 }
               }
             },
@@ -355,9 +593,35 @@
                   "timeUsed": 0,
                   "itemName": "pic of jesus number2",
                   "category": "NoCategory",
-                  "imageSource": "3530381261748847649595.jpg",
-                  "__v": 0,
-                  "fullImageUrl": "images/3530381261748847649595.jpg"
+                  "imageSource": "3530381261748847649595.jpg"
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "jwt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "jwt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
                 }
               }
             },
@@ -421,7 +685,7 @@
         "security": []
       }
     },
-    "/items/6838556bf29dd1f8dcef31b2": {
+    "/items/{id}": {
       "get": {
         "summary": "get one Item",
         "deprecated": false,
@@ -437,10 +701,80 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "{{$database.mongodbObjectId}}",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "favorite": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "timeUsed": {
+                      "type": "integer"
+                    },
+                    "itemName": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "favorite",
+                    "id",
+                    "userId",
+                    "timeUsed",
+                    "itemName",
+                    "category"
+                  ]
+                },
+                "example": {
+                  "favorite": false,
+                  "_id": "683d497655125aa584aa1331",
+                  "userId": "68354e054b4d9034b6af24b5",
+                  "timeUsed": 0,
+                  "itemName": "pic of jesus number2",
+                  "category": "NoCategory",
+                  "__v": 0
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
             "description": "",
             "content": {
               "application/json": {
@@ -454,9 +788,7 @@
           }
         },
         "security": []
-      }
-    },
-    "/items/": {
+      },
       "delete": {
         "summary": "delete item ",
         "deprecated": false,
@@ -475,9 +807,9 @@
           },
           {
             "name": "id",
-            "in": "query",
-            "description": "ID",
-            "required": false,
+            "in": "path",
+            "description": "",
+            "required": true,
             "example": "{{$database.mongodbObjectId}}",
             "schema": {
               "type": "string"
@@ -520,6 +852,53 @@
                   "required": [
                     "errors"
                   ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/image/{filename}": {
+      "get": {
+        "summary": "GET Image ",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "123.png",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          },
+          "x-200:jpeg": {
+            "description": "",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
                 }
               }
             },
