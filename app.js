@@ -27,7 +27,9 @@ app.set("view engine", "ejs");
 // Router
 
 app.get("/", (req, res) => {
-  res.status(RESPONSE_CODE_GOOD).json({ hello: "word" });
+  res.status(RESPONSE_CODE_GOOD).render("index.ejs", {
+    pagename: "home",
+  });
 });
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
