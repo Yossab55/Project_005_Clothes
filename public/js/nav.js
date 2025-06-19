@@ -1,5 +1,7 @@
+const body = document.querySelector("body");
 const nav = document.getElementById("nav");
 const MAX_SCREEN_MOBILE_WIDTH = 768;
+const FORM_ON_FLY_ID = "form-on-fly";
 
 let screenWidth = window.innerWidth;
 showForm();
@@ -42,6 +44,7 @@ function createForm(submitChild) {
   const searchInput = document.createElement("input");
   searchInput.classList = "form-control mr-sm-2";
   searchInput.setAttribute("type", "search");
+  searchInput.setAttribute("name", "search");
   searchInput.setAttribute("placeholder", "Search");
   searchInput.setAttribute("aria-label", "Search");
 
@@ -69,14 +72,13 @@ function createButton(submitChild) {
 function createFormMobileOnTheFly() {
   const divWrapper = document.createElement("div");
   divWrapper.classList = "z-2020 position-absolute form-on-fly";
+  divWrapper.setAttribute("id", FORM_ON_FLY_ID);
   const iconSend = document.createElement("i");
   iconSend.classList = "bi bi-send";
   const mobileFormOnFly = createForm(iconSend);
   divWrapper.append(mobileFormOnFly);
   console.log("hello click");
-  //todo remove if targe out
-  // todo the top and write are bad!!
-  // nav.append(divWrapper);
+  nav.append(divWrapper);
 }
 function removeFormSearch() {
   const formSearch = nav.children["form-search"];
@@ -90,3 +92,14 @@ function removeSpanSearch() {
     spanSearch.remove();
   }
 }
+body.addEventListener("click", (e) => {
+  const targetName = e.target.tagName;
+  const okay = ["INPUT", "I"];
+  if (!okay.includes(targetName)) {
+    const formOnFly = document.getElementById(FORM_ON_FLY_ID);
+    formOnFly.classList.add("form-on-fly-remove");
+    setTimeout(() => {
+      formOnFly.remove();
+    }, 800);
+  }
+});

@@ -1,3 +1,6 @@
+:root {
+  --main-transition: 0.3s;
+}
 nav {
   z-index: 1000;
 }
@@ -14,6 +17,32 @@ nav {
 }
 .form-on-fly {
   position: absolute;
-  right: 2px;
-  bottom: -2px;
+  right: -30px;
+  animation-name: goDown;
+  animation-duration: var(--main-transition);
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+.form-on-fly-remove {
+  animation-name: goUp;
+}
+@keyframes goDown {
+  from {
+    bottom: -10px;
+    opacity: 0;
+  }
+  to {
+    bottom: -30px;
+    opacity: 1;
+  }
+}
+@keyframes goUp {
+  from {
+    bottom: -30px;
+    opacity: 1;
+  }
+  to {
+    bottom: -10px;
+    opacity: 0;
+  }
 }
