@@ -1,3 +1,4 @@
+import { getId } from "./modules/helpers.js";
 const body = document.querySelector("body");
 const nav = document.getElementById("nav");
 const MAX_SCREEN_MOBILE_WIDTH = 768;
@@ -30,10 +31,10 @@ function formSearchMobile() {
   spanSearch.classList = "span-btn";
   const iconSearch = document.createElement("i");
   iconSearch.classList = "bi bi-search";
+  iconSearch.setAttribute("id", "bi-search");
   spanSearch.append(iconSearch);
   spanSearch.addEventListener("click", createFormMobileOnTheFly);
   removeFormSearch();
-  removeSpanSearch();
   nav.append(spanSearch);
 }
 function createForm(submitChild) {
@@ -75,9 +76,9 @@ function createFormMobileOnTheFly() {
   divWrapper.setAttribute("id", FORM_ON_FLY_ID);
   const iconSend = document.createElement("i");
   iconSend.classList = "bi bi-send";
+  iconSend.setAttribute("id", "bi-send");
   const mobileFormOnFly = createForm(iconSend);
   divWrapper.append(mobileFormOnFly);
-  console.log("hello click");
   nav.append(divWrapper);
 }
 function removeFormSearch() {
@@ -86,20 +87,32 @@ function removeFormSearch() {
     formSearch.remove();
   }
 }
-function removeSpanSearch() {
-  const spanSearch = nav.children["span-search"];
-  if (spanSearch) {
-    spanSearch.remove();
-  }
-}
 body.addEventListener("click", (e) => {
-  const targetName = e.target.tagName;
-  const okay = ["INPUT", "I"];
-  if (!okay.includes(targetName)) {
-    const formOnFly = document.getElementById(FORM_ON_FLY_ID);
-    formOnFly.classList.add("form-on-fly-remove");
-    setTimeout(() => {
-      formOnFly.remove();
-    }, 800);
+  const target = e.target;
+  console.log(target.targetName);
+  console.log(target.getAttribute("id"));
+  const okay = ["INPUT#formSearch", "I#bi-send", "I#bi-search"];
+  for (let i = 0; i < okay.length; i++) {
+    const DOMElement = okay[i];
+    const [name, id] = getId(DOMElement);
+    console.log(name, id);
+    if (!(target.targetName.includes(name) && DOMElement.includes(id))) {
+      const formOnFly = document.getElementById(FORM_ON_FLY_ID);
+      if (formOnFly) {
+        formOnFly.classList.add("form-on-fly-remove");
+        setTimeout(() => {
+          formOnFly.remove();
+        }, 800);
+      }
+    }
   }
+  // if (!okay.includes(targetName)) {
+  //   const formOnFly = document.getElementById(FORM_ON_FLY_ID);
+  //   if (formOnFly) {
+  //     formOnFly.classList.add("form-on-fly-remove");
+  //     setTimeout(() => {
+  //       formOnFly.remove();
+  //     }, 800);
+  //   }
+  // }
 });
