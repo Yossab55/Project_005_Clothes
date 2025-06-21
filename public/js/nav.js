@@ -11,6 +11,7 @@ function showForm() {
   updateScreenWidth();
   checkTheWidthIsMobile() ? formSearchMobile() : formSearchComputer();
 }
+//# update screen width & check if it mobile or not
 function updateScreenWidth() {
   screenWidth = window.innerWidth;
 }
@@ -20,6 +21,7 @@ function checkTheWidthIsMobile() {
   }
   return false;
 }
+//#build the formSearch
 function formSearchComputer() {
   const computerForm = createForm("Search");
   removeFormSearch();
@@ -81,38 +83,48 @@ function createFormMobileOnTheFly() {
   divWrapper.append(mobileFormOnFly);
   nav.append(divWrapper);
 }
+//# remove the fom
 function removeFormSearch() {
   const formSearch = nav.children["form-search"];
   if (formSearch) {
     formSearch.remove();
   }
 }
-body.addEventListener("click", (e) => {
-  const target = e.target;
-  console.log(target.targetName);
-  console.log(target.getAttribute("id"));
-  const okay = ["INPUT#formSearch", "I#bi-send", "I#bi-search"];
-  for (let i = 0; i < okay.length; i++) {
-    const DOMElement = okay[i];
-    const [name, id] = getId(DOMElement);
-    console.log(name, id);
-    if (!(target.targetName.includes(name) && DOMElement.includes(id))) {
-      const formOnFly = document.getElementById(FORM_ON_FLY_ID);
-      if (formOnFly) {
-        formOnFly.classList.add("form-on-fly-remove");
-        setTimeout(() => {
-          formOnFly.remove();
-        }, 800);
-      }
-    }
+function removeFormOnFly() {
+  const formOnFly = document.getElementById(FORM_ON_FLY_ID);
+  if (formOnFly) {
+    formOnFly.classList.add("form-on-fly-remove");
+    setTimeout(() => {
+      formOnFly.remove();
+    }, 800);
   }
-  // if (!okay.includes(targetName)) {
-  //   const formOnFly = document.getElementById(FORM_ON_FLY_ID);
-  //   if (formOnFly) {
-  //     formOnFly.classList.add("form-on-fly-remove");
-  //     setTimeout(() => {
-  //       formOnFly.remove();
-  //     }, 800);
-  //   }
-  // }
-});
+}
+function checkEveryClickToRemoveForm(element) {
+  const target = element.target;
+  const okayElements = ["INPUT#formSearch", "I#bi-send", "I#bi-search"];
+  const result = okayElements.every(checkEveryElementRemove, target);
+  if (result) removeFormOnFly();
+  console.log(result);
+}
+//#helpers function for checkEveryClickToRemoveForm function
+function checkEveryElementRemove(element, index, array) {
+  const [name, id] = getId(element);
+  if (!checkForByTarget(name, id, this)) {
+    return true;
+  }
+  return false;
+}
+function checkForByTarget(name, id, target) {
+  if (!target.tagName.includes(name)) {
+    return false;
+  }
+  if (!target.hasAttribute("id")) {
+    return false;
+  }
+  if (!target.getAttribute("id") == id) {
+    return false;
+  }
+  return true;
+}
+
+body.addEventListener("click", checkEveryClickToRemoveForm);
