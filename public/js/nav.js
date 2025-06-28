@@ -1,12 +1,14 @@
 import { getId } from "./modules/helpers.js";
 const body = document.querySelector("body");
-const nav = document.getElementById("nav");
+const navContainer = document.getElementById("nav-container");
+console.log(navContainer);
 const MAX_SCREEN_MOBILE_WIDTH = 768;
 const FORM_ON_FLY_ID = "form-on-fly";
 
 let screenWidth = window.innerWidth;
 showForm();
 window.addEventListener("resize", showForm);
+//#show form
 function showForm() {
   updateScreenWidth();
   checkTheWidthIsMobile() ? formSearchMobile() : formSearchComputer();
@@ -21,15 +23,15 @@ function checkTheWidthIsMobile() {
   }
   return false;
 }
-//#build the formSearch
+//#build the form Search
 function formSearchComputer() {
   const computerForm = createForm("Search");
   removeFormSearch();
-  nav.append(computerForm);
+  navContainer.append(computerForm);
 }
 function formSearchMobile() {
   const spanSearch = document.createElement("span");
-  spanSearch.setAttribute("id", "span-search");
+  spanSearch.setAttribute("id", "form-search");
   spanSearch.classList = "span-btn";
   const iconSearch = document.createElement("i");
   iconSearch.classList = "bi bi-search";
@@ -37,7 +39,7 @@ function formSearchMobile() {
   spanSearch.append(iconSearch);
   spanSearch.addEventListener("click", createFormMobileOnTheFly);
   removeFormSearch();
-  nav.append(spanSearch);
+  navContainer.append(spanSearch);
 }
 function createForm(submitChild) {
   const form = document.createElement("form");
@@ -73,6 +75,8 @@ function createButton(submitChild) {
   return button;
 }
 function createFormMobileOnTheFly() {
+  const checker = document.getElementById(FORM_ON_FLY_ID);
+  if (checker) return;
   const divWrapper = document.createElement("div");
   divWrapper.classList = "z-2020 position-absolute form-on-fly";
   divWrapper.setAttribute("id", FORM_ON_FLY_ID);
@@ -81,11 +85,11 @@ function createFormMobileOnTheFly() {
   iconSend.setAttribute("id", "bi-send");
   const mobileFormOnFly = createForm(iconSend);
   divWrapper.append(mobileFormOnFly);
-  nav.append(divWrapper);
+  navContainer.append(divWrapper);
 }
-//# remove the fom
+//# remove the form
 function removeFormSearch() {
-  const formSearch = nav.children["form-search"];
+  const formSearch = navContainer.children["form-search"];
   if (formSearch) {
     formSearch.remove();
   }
