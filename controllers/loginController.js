@@ -4,7 +4,7 @@ import { createToken } from "../utils/createToken.js";
 import { MAX_AGE } from "../utils/constant/timeConstants.js";
 
 function getLoginView(req, res) {
-  res.render("login.ejs");
+  res.render("login.ejs", { pagename: "login" });
 }
 
 async function loginUser(req, res) {
