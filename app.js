@@ -12,6 +12,8 @@ import {
   itemRouter,
   imageRouter,
 } from "./routers/indexRouter.js";
+import { tryCatch } from "./utils/tryCatch.js";
+import { requiredAuth } from "./middleware/AuthMiddlewares.js";
 const app = express();
 
 connectToDB(app);
@@ -27,9 +29,11 @@ app.set("view engine", "ejs");
 // Router
 
 app.get("/", (req, res) => {
-  res.status(RESPONSE_CODE_GOOD).render("index.ejs", {
+  res.status(RESPONSE_CODE_GOOD).render("items.ejs", {
     pagename: "home",
   });
+  // tryCatch(requiredAuth)
+  //todo direct to /items
 });
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);

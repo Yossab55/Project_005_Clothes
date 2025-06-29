@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <div class="container">
+      <img
+        src="/image/clothes-hanger.svg"
+        width="30"
+        height="30"
+        alt="Coco logo"
+      />
+      <h2>Welcome</h2>
+    </div>
+    <div class="container">
+      <form action="/login" method="post">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="name@example.com"
+            name="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Password" class="form-label">Password</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control"
+              id="Password"
+              placeholder="test123"
+              name="password"
+            />
+            <span class="input-group-text" id="eye"
+              ><i class="bi bi-eye-fill"></i
+            ></span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">login</button>
+      </form>
+      <span
+        >Don't Have Account?
+        <a href="/signup" class="link-sign-up">Sign Up</a></span
+      >
+    </div>
+  </body>
+</html>

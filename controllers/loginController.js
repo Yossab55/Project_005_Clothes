@@ -18,7 +18,7 @@ async function loginUser(req, res) {
     httpOnly: true,
     maxAge: MAX_AGE * 1000,
   });
-  //todo redirect to home page
+  //todo redirect to items page
   res.status(RESPONSE_CODE_CREATED_SUCCESSFULLY).json({ user });
 }
 

@@ -30,7 +30,9 @@ async function getItem(req, res, next) {
 //# get items
 async function getAll(req, res) {
   const items = await getItemByQuery(req, res);
-  res.status(RESPONSE_CODE_GOOD).json({ items });
+  res
+    .status(RESPONSE_CODE_GOOD)
+    .render("items.ejs", { pagename: "home", items });
 }
 async function getItemByQuery(req, res) {
   if (checkQueryParamPageLimit(req)) {

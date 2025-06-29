@@ -9,7 +9,7 @@ function requiredAuth(req, res, next) {
   if (token) {
     jwt.verify(token, env("JWT_SECRET"), (tokenError, decodedToken) => {
       if (tokenError) {
-        res.status(400).json({ errors });
+        res.redirect("/login");
         //todo  res.redirect("/login");
       } else {
         req.userId = decodedToken.id;
@@ -17,7 +17,7 @@ function requiredAuth(req, res, next) {
       }
     });
   } else {
-    res.status(400).json({ errors });
+    res.redirect("/login");
 
     // res.redirect("/login");
   }
